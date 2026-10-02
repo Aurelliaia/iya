@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About Me — Aurel</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#fff;color:#000;font-family:'Courier New',monospace;font-weight:700;overflow:hidden}
+canvas.px{image-rendering:pixelated;image-rendering:crisp-edges}
+#track{display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#track::-webkit-scrollbar{display:none}
+#track.locked{overflow:hidden}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 18px 76px;text-align:center;position:relative;overflow-x:hidden;overflow-y:auto;justify-content:safe center}
+h1{font-size:clamp(2.4rem,11vw,4.2rem);letter-spacing:2px;text-shadow:4px 4px 0 #ddd}
+h2{font-size:1.7rem;margin-bottom:14px;border-bottom:4px solid #000;padding:0 10px 2px;display:inline-block}
+.sub{margin:12px 0 22px;color:#444}
+.btn{font:inherit;font-weight:900;font-size:1.15rem;background:#000;color:#fff;border:3px solid #000;padding:12px 30px;cursor:pointer;box-shadow:5px 5px 0 #aaa;animation:blink 1s steps(2) infinite}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #aaa}
+@keyframes blink{50%{background:#fff;color:#000}}
+.box{border:3px solid #000;background:#fff;box-shadow:6px 6px 0 #000;padding:16px;width:min(420px,100%);text-align:left}
+.row{display:flex;gap:10px;padding:6px 0;font-size:.92rem;border-bottom:2px dashed #000}
+.row:last-child{border:0}
+.row span:first-child{width:105px;flex-shrink:0;text-decoration:underline}
+.ed{min-width:60px;outline:0;color:#888;border-bottom:2px dotted #000;flex:1}.ed.has{color:#000}
+.photo{width:min(230px,60vw);aspect-ratio:9/16;max-height:62vh;border:4px solid #000;box-shadow:8px 8px 0 #000;position:relative;cursor:pointer;background:#f2f2f2;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:none}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;font-size:.85rem}
+.bar{margin:12px 0}
+.bar .l{display:flex;justify-content:space-between;margin-bottom:5px}
+.bar .t{height:16px;border:3px solid #000;background:#fff}
+.bar .f{height:100%;width:0;background:repeating-linear-gradient(90deg,#000 0 8px,#fff 8px 10px);transition:width 1.2s steps(12) .2s}
+.chip{display:inline-block;border:3px solid #000;padding:8px 14px;margin:5px;box-shadow:3px 3px 0 #000;background:#fff}
+a.ig{display:inline-block;color:#fff;background:#000;text-decoration:none;padding:12px 26px;border:3px solid #000;box-shadow:5px 5px 0 #aaa}
+.heroes{position:relative;width:min(320px,90vw);height:260px}
+.sw{position:absolute;top:0;transform-origin:50% 0;animation:sw 2.6s ease-in-out infinite alternate;display:flex;flex-direction:column;align-items:center}
+.sw.b{animation-delay:-1.3s}
+.sw i{display:block;width:3px;height:90px;background:#000}
+@keyframes sw{from{transform:rotate(-25deg)}to{transform:rotate(25deg)}}
+.deco{position:absolute;pointer-events:none;animation:bob 2s steps(4) infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.nav{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:0;right:0;display:none;justify-content:center;align-items:center;gap:14px;z-index:5}
+.nav.show{display:flex}
+.nav button{width:40px;height:40px;border:3px solid #000;background:#fff;font:inherit;font-size:1.2rem;cursor:pointer;box-shadow:3px 3px 0 #000}
+.dots{display:flex;gap:7px}
+.dots i{width:12px;height:12px;border:2px solid #000;background:#fff}
+.dots i.on{background:#000}
+.hint{position:fixed;right:14px;top:50%;font-size:1.6rem;animation:bob 1s steps(2) infinite;display:none}
+.hint.show{display:block}
+</style>
+</head>
+<body>
+<div id="track" class="locked">
+
+<section class="slide">
+  <div class="heroes">
+    <div class="sw" style="left:12%"><i></i><canvas class="px" data-sp="boy" data-sc="7"></canvas></div>
+    <div class="sw b" style="right:12%"><i></i><canvas class="px" data-sp="girl" data-sc="7"></canvas></div>
+  </div>
+  <h1>ABOUT ME</h1>
+  <p class="sub">swing masuk ke dunia Aurel</p>
+  <button class="btn" onclick="start()">▶ CLICK START</button>
+  <canvas class="px deco" data-sp="flower" data-sc="5" style="left:8%;top:10%"></canvas>
+  <canvas class="px deco" data-sp="star" data-sc="5" style="right:9%;top:12%;animation-delay:-.7s"></canvas>
+  <canvas class="px deco" data-sp="heart" data-sc="5" style="left:12%;bottom:8%;animation-delay:-1.2s"></canvas>
+  <canvas class="px deco" data-sp="flower" data-sc="4" style="right:10%;bottom:10%;animation-delay:-.4s"></canvas>
+</section>
+
+<section class="slide">
+  <div class="photo" id="photo">
+    <img id="img" alt="Foto Aurel">
+    <div class="ph" id="ph"><canvas class="px" data-sp="flower" data-sc="6"></canvas>Coba Pasang Foto kalian</div>
+  </div>
+  <input type="file" id="file" accept="image/*" hidden>
+  <h2 style="margin-top:20px">IHHH CAKEP NYA OIII!!!</h2>
+  <canvas class="px deco" data-sp="star" data-sc="5" style="left:6%;top:9%"></canvas>
+  <canvas class="px deco" data-sp="heart" data-sc="5" style="right:7%;top:20%;animation-delay:-.8s"></canvas>
+  <canvas class="px deco" data-sp="flower" data-sc="5" style="left:8%;bottom:14%;animation-delay:-1.4s"></canvas>
+</section>
+
+<section class="slide">
+  <h2>BIODATA</h2>
+  <div class="box">
+    <div class="row"><span>Nama</span><span>Aurellia M.K</span></div>
+    <div class="row"><span>Panggilan</span><span>Rel / Aurel / Orel</span></div>
+    <div class="row"><span>Cita-cita</span><span>Cuma Allah Yang Tau</span></div>
+    <div class="row"><span>Keahlian</span><span>Jaga Bumi</span></div>
+    <div class="row"><span>Zodiak</span><span>Aries</span></div>
+    <div class="row"><span>Makanan fav</span><span>Zupa Sup</span></div>
+    <div class="row"><span>Motto</span><span>知足常乐 (Zhīzú chánglè)</span></div>
+  </div>
+  <canvas class="px deco" data-sp="flower" data-sc="5" style="right:7%;top:8%"></canvas>
+  <canvas class="px deco" data-sp="heart" data-sc="5" style="left:7%;bottom:13%;animation-delay:-1s"></canvas>
+</section>
+
+<section class="slide">
+  <h2>SKILL</h2>
+  <div class="box" id="skills">
+    <div class="bar"><div class="l"><span>CorelDraw</span><span>90%</span></div><div class="t"><div class="f" data-w="90"></div></div></div>
+    <div class="bar"><div class="l"><span>Photoshop</span><span>78%</span></div><div class="t"><div class="f" data-w="78"></div></div></div>
+    <div class="bar"><div class="l"><span>Canva</span><span>95%</span></div><div class="t"><div class="f" data-w="95"></div></div></div>
+    <div class="bar"><div class="l"><span>Sayang Aku Ke Kamu</span><span>100%</span></div><div class="t"><div class="f" data-w="100"></div></div></div>
+  </div>
+  <p class="sub" style="font-size:.75rem">*WKWKWKWKWKWK, PRANKKKKKKK</p>
+  <canvas class="px deco" data-sp="star" data-sc="5" style="left:7%;top:9%"></canvas>
+  <canvas class="px deco" data-sp="flower" data-sc="4" style="right:8%;bottom:14%;animation-delay:-.9s"></canvas>
+</section>
+
+<section class="slide">
+  <h2>HOBI</h2>
+  <div><span class="chip">Travelling low budget</span><span class="chip">Maen Game Ampe Mabok</span><span class="chip">Desain</span></div>
+  <p class="sub">Pokoknya Yang Keliatan Keren Aku jadiin Hobi !</p>
+  <canvas class="px" data-sp="plane" data-sc="7"></canvas>
+  <canvas class="px deco" data-sp="heart" data-sc="5" style="left:8%;top:10%"></canvas>
+  <canvas class="px deco" data-sp="flower" data-sc="5" style="right:8%;top:14%;animation-delay:-1s"></canvas>
+  <canvas class="px deco" data-sp="star" data-sc="5" style="left:10%;bottom:14%;animation-delay:-.5s"></canvas>
+</section>
+
+<section class="slide">
+  <div class="heroes" style="transform:scale(.75);height:230px;margin-bottom:-20px">
+    <div class="sw" style="left:12%"><i></i><canvas class="px" data-sp="boy" data-sc="7"></canvas></div>
+    <div class="sw b" style="right:12%"><i></i><canvas class="px" data-sp="girl" data-sc="7"></canvas></div>
+  </div>
+  <h1 style="font-size:2.3rem">TERIMA KASIH!</h1>
+  <p class="sub">yuk ngobrol sma orng cantik &amp; kolaborasi</p>
+  <a class="ig" href="https://www.instagram.com/qiurell" target="_blank" rel="noopener">@qiurell</a>
+  <canvas class="px deco" data-sp="flower" data-sc="5" style="left:8%;top:9%"></canvas>
+  <canvas class="px deco" data-sp="heart" data-sc="5" style="right:9%;bottom:14%;animation-delay:-1s"></canvas>
+</section>
+</div>
+
+<div class="hint" id="hint">»</div>
+<div class="nav" id="nav"><button onclick="step(-1)">‹</button><div class="dots" id="dots"></div><button onclick="step(1)">›</button></div>
+
+<script>
+const S={
+boy:{p:{K:'#000',R:'#ff2d55',B:'#2d6bff',W:'#fff'},r:["....KKKK....","...KRRRRK...","..KRRRRRRK..","..KWWRRWWK..","..KRRRRRRK..","...KRRRRK...","..BBKRRKBB..",".BBBRRRRBBB.",".BB.RRRR.BB.","...BBRRBB...","...BB..BB...","..KBB..BBK.."]},
+girl:{p:{K:'#000',R:'#fff',B:'#a24dff',W:'#ff7ad9',P:'#ff7ad9'},r:["....KKKK.PP.","...KRRRRKPP.","..KRRRRRRK..","..KWWRRWWK..","..KRRRRRRK..","...KRRRRK...","..BBKRRKBB..",".BBBRRRRBBB.",".BB.RRRR.BB.","...BBRRBB...","...BB..BB...","..KBB..BBK.."]},
+flower:{p:{P:'#ff7ad9',Y:'#ffd23f',G:'#2ecc71'},r:["..PP.PP..",".PPPPPPP.",".PPYYYPP.",".PPYYYPP.",".PPPPPPP.","..PP.PP..","....G....","..GGG....","....G...."]},
+heart:{p:{R:'#ff2d55',W:'#fff'},r:[".RR.RR.","RWRRRRR","RRRRRRR",".RRRRR.","..RRR..","...R..."]},
+star:{p:{Y:'#ffd23f'},r:["...Y...","...Y...","YYYYYYY",".YYYYY.","..YYY..",".YY.YY.","Y.....Y"]},
+plane:{p:{K:'#000',B:'#2d9cff',W:'#fff',R:'#ff2d55'},r:["......KK......","......KBK.....","...KK.KBBK....","..KBBKKBBBKK..",".KBBBBBBBBBBK.","KWWWBBBBBBBBBK",".KKKBBBBBBBBK.","....KBBBKKKK..","....KBBK......","....KRRK......","....KKK......."]}
+};
+document.querySelectorAll('canvas[data-sp]').forEach(c=>{
+  const d=S[c.dataset.sp],sc=+c.dataset.sc,h=d.r.length,w=d.r[0].length;
+  c.width=w;c.height=h;c.style.width=w*sc+'px';c.style.height=h*sc+'px';
+  const x=c.getContext('2d');
+  d.r.forEach((row,j)=>[...row].forEach((ch,i)=>{if(d.p[ch]){x.fillStyle=d.p[ch];x.fillRect(i,j,1,1)}}));
+});
+const tr=document.getElementById('track'),nav=document.getElementById('nav'),dots=document.getElementById('dots'),hint=document.getElementById('hint');
+const n=tr.children.length;
+for(let i=1;i<n;i++)dots.insertAdjacentHTML('beforeend','<i></i>');
+function idx(){return Math.round(tr.scrollLeft/tr.clientWidth)}
+function step(d){tr.scrollTo({left:(idx()+d)*tr.clientWidth,behavior:'smooth'})}
+function start(){tr.classList.remove('locked');nav.classList.add('show');hint.classList.add('show');step(1)}
+function upd(){const i=idx();[...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i-1));
+  hint.style.display=(i>0&&i<n-1)?'block':'none';
+  document.querySelectorAll('#skills .f').forEach(f=>f.style.width=i===3?f.dataset.w+'%':'0')}
+tr.addEventListener('scroll',upd);
+addEventListener('keydown',e=>{if(tr.classList.contains('locked'))return;if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+const img=document.getElementById('img'),ph=document.getElementById('ph'),file=document.getElementById('file');
+function show(s){img.src=s;img.style.display='block';ph.style.display='none'}
+try{const s=localStorage.getItem('aurel-foto');if(s)show(s)}catch(e){}
+document.getElementById('photo').onclick=()=>file.click();
+file.onchange=()=>{const f=file.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{show(r.result);try{localStorage.setItem('aurel-foto',r.result)}catch(e){}};r.readAsDataURL(f)};
+document.querySelectorAll('.ed').forEach(e=>{
+  e.contentEditable=true;
+  try{const v=localStorage.getItem('aurel-'+e.dataset.k);if(v){e.textContent=v;e.classList.add('has')}}catch(x){}
+  e.onfocus=()=>{if(!e.classList.contains('has'))e.textContent=''};
+  e.oninput=()=>{e.classList.add('has');try{localStorage.setItem('aurel-'+e.dataset.k,e.textContent)}catch(x){}};
+  e.onblur=()=>{if(!e.textContent.trim()){e.textContent='ketuk untuk isi';e.classList.remove('has');try{localStorage.removeItem('aurel-'+e.dataset.k)}catch(x){}}};
+});
+upd();
+</script>
+</body>
+</html>
